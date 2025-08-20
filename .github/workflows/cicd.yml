@@ -72,13 +72,24 @@ jobs:
 
     - uses: actions/checkout@v4
       with:
-        # Disabling shallow clones is recommended for improving the relevancy of reporting
+        # Disabling shallow clonesworking-directory: ./Action_project is recommended for improving the relevancy of reporting
         fetch-depth: 0
     - name: SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v5.3.0 # Ex: v4.1.0, See the latest version at https://github.com/marketplace/actions/official-sonarqube-scan
+      
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
+      run: |
+        sonar-scanner \
+          -Dsonar.projectKey=github-action-project \
+          -Dsonar.projectName="Github Action Project" \
+          -Dsonar.projectVersion=1.0.0 \
+          -Dsonar.sources=src/main/java \
+          -Dsonar.tests=src/test/java \
+          -Dsonar.java.binaries=target/classes \
+          -Dsonar.host.url=${{ secrets.SONAR_HOST_URL }} \
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+      working-directory: ./Action_project/src
 
    # Check the Quality Gate status.
     - name: SonarQube Quality Gate check
