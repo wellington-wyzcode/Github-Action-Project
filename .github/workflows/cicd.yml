@@ -66,30 +66,20 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
+        
     - name: build_project
       #working-directory: ./Action_project
       run: mvn -f Action_project/pom.xml package
-
     - uses: actions/checkout@v4
       with:
         # Disabling shallow clonesworking-directory: ./Action_project is recommended for improving the relevancy of reporting
         fetch-depth: 0
     - name: SonarQube Scan
-      
+      uses: SonarSource/sonarqube-scan-action@v5.0.0
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         SONAR_HOST_URL: ${{ vars.SONAR_HOST_URL }}
-      run: |
-        sonar-scanner \
-          -Dsonar.projectKey=github-action-project \
-          -Dsonar.projectName="Github Action Project" \
-          -Dsonar.projectVersion=1.0.0 \
-          -Dsonar.sources=src/main/java \
-          -Dsonar.tests=src/test/java \
-          -Dsonar.java.binaries=target/classes \
-          -Dsonar.host.url=${{ vars.SONAR_HOST_URL }} \
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
-      working-directory: ./Action_project/src
+      
 
    # Check the Quality Gate status.
     - name: SonarQube Quality Gate check
