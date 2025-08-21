@@ -113,6 +113,11 @@ jobs:
        with:
           name: my-app-jar
           path: app #this will upload JAR to ./app folder
+     - name: Clean up disk space
+       run: |
+        docker system prune -af
+        rm -rf /home/ubuntu/.docker/.cache/*
+        sudo apt-get clean    
 
     #login to dockerhub and push image
      - name: Login to Docker Hub
