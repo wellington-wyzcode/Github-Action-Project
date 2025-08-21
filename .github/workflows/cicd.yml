@@ -160,7 +160,7 @@ jobs:
             version: latest
         - name: configure kubeconfig
           run: |
-            mkdir -p $HOME/ .kube
+            mkdir -p $HOME/.kube
             echo "${{ secrets.EKS_KUBECONFIG }}" > $HOME/ .kube/config
         - name: Deploy to EKS
           run: |
