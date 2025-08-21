@@ -70,16 +70,13 @@ jobs:
     - name: build_project
       #working-directory: ./Action_project
       run: mvn -f Action_project/pom.xml package
-    - uses: actions/checkout@v4
-      with:
-        # Disabling shallow clonesworking-directory: ./Action_project is recommended for improving the relevancy of reporting
-        fetch-depth: 0
+   
     #upload JAR Artifact FILE to target/.jar Directory
     - name: Upload JAR artifact
       uses: actions/upload-artifact@v4
       with:
           name: my-app-jar
-          path: ./target/*.jar
+          path: Action_project/target/*.jar
     - name: SonarQube Scan
       uses: SonarSource/sonarqube-scan-action@v5.0.0
       env:
