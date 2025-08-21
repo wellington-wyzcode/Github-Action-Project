@@ -161,7 +161,7 @@ jobs:
         - name: configure kubeconfig
           run: |
             mkdir -p $HOME/.kube
-            echo "${{ secrets.EKS_KUBECONFIG }}" > $HOME/ .kube/config
+            echo "${{ secrets.EKS_KUBECONFIG }}" > $HOME/.kube/config
         - name: Deploy to EKS
           run: |
             kubectl apply -f ds.yaml 
